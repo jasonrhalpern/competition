@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140313022804) do
+ActiveRecord::Schema.define(version: 20140323175857) do
 
   create_table "awards", force: true do |t|
     t.integer  "distinction_id"
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20140313022804) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "close_date"
+    t.integer  "entries_count", default: 0
   end
 
   add_index "events", ["category_id"], name: "index_events_on_category_id"
@@ -90,8 +91,13 @@ ActiveRecord::Schema.define(version: 20140313022804) do
     t.string   "last_sign_in_ip"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string   "username"
   end
 
+  add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
