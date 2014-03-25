@@ -11,25 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140323175857) do
-
-  create_table "awards", force: true do |t|
-    t.integer  "distinction_id"
-    t.integer  "entry_id"
-    t.integer  "event_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "awards", ["distinction_id"], name: "index_awards_on_distinction_id"
-  add_index "awards", ["entry_id"], name: "index_awards_on_entry_id"
-  add_index "awards", ["event_id"], name: "index_awards_on_event_id"
-
-  create_table "categories", force: true do |t|
-    t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(version: 20140325002912) do
 
   create_table "comments", force: true do |t|
     t.text     "description"
@@ -41,12 +23,6 @@ ActiveRecord::Schema.define(version: 20140323175857) do
 
   add_index "comments", ["entry_id"], name: "index_comments_on_entry_id"
   add_index "comments", ["user_id"], name: "index_comments_on_user_id"
-
-  create_table "distinctions", force: true do |t|
-    t.string   "type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "entries", force: true do |t|
     t.string   "title"
@@ -68,14 +44,12 @@ ActiveRecord::Schema.define(version: 20140323175857) do
     t.date     "end_date"
     t.decimal  "entry_fee"
     t.integer  "user_id"
-    t.integer  "category_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.date     "close_date"
     t.integer  "entries_count", default: 0
   end
 
-  add_index "events", ["category_id"], name: "index_events_on_category_id"
   add_index "events", ["user_id"], name: "index_events_on_user_id"
 
   create_table "users", force: true do |t|
