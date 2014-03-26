@@ -1,6 +1,8 @@
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :lockable, :timeoutable and :omniauthable
+
+  #do NOT change the order of the role enum
+  enum role: [ :regular, :producer, :admin ]
+
   devise :database_authenticatable, :registerable,:confirmable,
          :recoverable, :rememberable, :trackable
 
@@ -12,6 +14,7 @@ class User < ActiveRecord::Base
   validates :email, :presence => true, :uniqueness => true, :format => { with: Devise::email_regexp }
   validates :username, :presence => true, :uniqueness => true, :length => { :in => 5..20 }
   validates :password, :presence => true, :confirmation => true, :length => { :in => 6..20 }, :if => :password_required?
+  validates :role, :presence => true
   validate :password_complexity
 
   def password_complexity

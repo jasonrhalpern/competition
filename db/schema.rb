@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140325002912) do
+ActiveRecord::Schema.define(version: 20140325234116) do
 
   create_table "comments", force: true do |t|
     t.text     "description"
@@ -32,6 +32,8 @@ ActiveRecord::Schema.define(version: 20140325002912) do
     t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "votes_count",  default: 0
+    t.integer  "award",        default: 0
   end
 
   add_index "entries", ["event_id"], name: "index_entries_on_event_id"
@@ -48,6 +50,7 @@ ActiveRecord::Schema.define(version: 20140325002912) do
     t.datetime "updated_at"
     t.date     "close_date"
     t.integer  "entries_count", default: 0
+    t.integer  "category"
   end
 
   add_index "events", ["user_id"], name: "index_events_on_user_id"
@@ -69,6 +72,7 @@ ActiveRecord::Schema.define(version: 20140325002912) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string   "username"
+    t.integer  "role",                   default: 0
   end
 
   add_index "users", ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
