@@ -11,10 +11,10 @@ class User < ActiveRecord::Base
   has_many :comments, inverse_of: :user
   has_many :votes, inverse_of: :user
 
-  validates :email, :presence => true, :uniqueness => true, :format => { with: Devise::email_regexp }
-  validates :username, :presence => true, :uniqueness => true, :length => { :in => 5..20 }
-  validates :password, :presence => true, :confirmation => true, :length => { :in => 6..20 }, :if => :password_required?
-  validates :role, :presence => true
+  validates :email, presence: true, uniqueness: true, format: { with: Devise::email_regexp }
+  validates :username, presence: true, uniqueness: true, length: { in: 5..20 }
+  validates :password, presence: true, confirmation: true, length: { in: 6..20 }, if: :password_required?
+  validates :role, presence: true
   validate :password_complexity
 
   def password_complexity

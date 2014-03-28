@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140325234116) do
+ActiveRecord::Schema.define(version: 20140328005747) do
 
   create_table "comments", force: true do |t|
     t.text     "description"
@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20140325234116) do
     t.date     "close_date"
     t.integer  "entries_count", default: 0
     t.integer  "category"
+    t.integer  "status",        default: 0
   end
 
   add_index "events", ["user_id"], name: "index_events_on_user_id"
