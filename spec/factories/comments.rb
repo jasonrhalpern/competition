@@ -2,8 +2,8 @@
 
 FactoryGirl.define do
   factory :comment do
-    description "MyText"
-    user nil
-    entry nil
+    description 'Best video ever'
+    user
+    entry
   end
 end
