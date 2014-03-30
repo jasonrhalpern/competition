@@ -25,6 +25,10 @@ class Event < ActiveRecord::Base
     Event.upcoming.approved.order(start_date: :desc)
   end
 
+  def self.recent_winners
+    joins(:entries).merge(Entry.winners).order(end_date: :desc)
+  end
+
   def closed?
     current_date > close_date
   end

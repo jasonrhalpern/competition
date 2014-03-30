@@ -19,8 +19,4 @@ class Entry < ActiveRecord::Base
   scope :runner_ups, -> { where award: :runner_up }
   scope :finalists, -> { where award: :finalist }
 
-  def self.recent_winners
-    #winners scope and joins event
-  end
-
 end

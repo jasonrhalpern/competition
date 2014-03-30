@@ -2,12 +2,14 @@
 
 FactoryGirl.define do
   factory :event do
-    title "MyString"
-    description "MyText"
+    title 'Big Event'
+    description 'This event is going to be huge'
     start_date "2014-03-09"
-    end_date "2014-03-09"
-    entry_fee "9.99"
-    user nil
-    category nil
+    end_date "2014-03-10"
+    close_date "2014-03-11"
+    entry_fee "2.00"
+    user
+    approved_status
+    category :music
   end
 end
