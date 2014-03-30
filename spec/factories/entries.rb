@@ -6,7 +6,7 @@ FactoryGirl.define do
     description 'My video is the best'
     content_type 'mp4'
     user
-    event nil
+    event
     loser_award
     approved_status
   end

@@ -42,6 +42,16 @@ describe User do
     expect(build(:user, password: 'password')).to_not be_valid
   end
 
+  it 'is invalid without a unique email' do
+    create(:user, email: 'test@aol.com')
+    expect(build_stubbed(:user, email: 'test@aol.com')).to have(1).errors_on(:email)
+  end
+
+  it 'is invalid without a unique username' do
+    create(:user, username: 'TestUser')
+    expect(build_stubbed(:user, username: 'TestUser')).to have(1).errors_on(:username)
+  end
+
   context 'with a regular user role' do
     it 'is a regular user' do
       expect(build(:user).regular?).to be_true

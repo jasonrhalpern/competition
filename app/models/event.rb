@@ -7,7 +7,7 @@ class Event < ActiveRecord::Base
   belongs_to :user, inverse_of: :events
   has_many :entries, inverse_of: :event
 
-  validates :user, :category, :title, :description, :start_date, :end_date, :close_date, :category, :status, presence: true
+  validates :user, :title, :description, :start_date, :end_date, :close_date, :category, :status, presence: true
   validates :title, length: { maximum: 80 }, uniqueness: true
   validates :description, length: { maximum: 600 }
   validate :dates_in_order
@@ -46,10 +46,11 @@ class Event < ActiveRecord::Base
   end
 
   def dates_in_order
-    if end_date <= start_date
+
+    if start_date.present? and end_date.present? and end_date <= start_date
       errors.add :start_date, 'The start date has to be before the end date'
     end
-    if end_date >= close_date
+    if end_date.present? and close_date.present? and end_date >= close_date
       errors.add :end_date, 'The end date has to be before the close date'
     end
   end
