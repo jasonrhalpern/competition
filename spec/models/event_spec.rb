@@ -60,14 +60,40 @@ describe Event do
     expect(build(:event, end_date: Date.today, close_date: Date.yesterday)).to have(1).errors_on(:end_date)
   end
 
-  it 'returns an array of approved events' do
-    event1, event2, event3 = create(:event), create(:event), create(:event, status: :pending)
-    expect(Event.approved).to eq([event1, event2])
-  end
+  describe 'scopes' do
 
-  it 'returns an array of current and approved events' do
-    event1 = create(:event, start_date: 1.day.ago, end_date: 1.day.from_now, close_date: 2.days.from_now)
-    expect(Event.current_approved).to eq([event1])
+    it 'returns an array of approved events' do
+      event1, event2, event3 = create(:event), create(:event), create(:pending_event)
+      expect(Event.approved).to eq([event1, event2])
+    end
+
+    it 'returns an array of pending events' do
+      event1, event2, event3 = create(:event), create(:pending_event), create(:pending_event)
+      expect(Event.pending).to eq([event2, event3])
+    end
+
+    it 'returns an array of upcoming events' do
+      event1, event2, event3 = create(:event), create(:upcoming_approved_event), create(:upcoming_approved_event)
+      expect(Event.upcoming).to eq([event2, event3])
+    end
+
+    it 'returns an array of current and approved events' do
+      event1 = create(:current_approved_event)
+      event2 = create(:current_pending_event)
+      event3 = create(:upcoming_approved_event)
+      event4 = create(:current_approved_event, start_date: 1.week.ago)
+      expect(Event.current_approved).to eq([event1, event4])
+    end
+
+    it 'returns an array of upcoming and approved events' do
+      event1 = create(:upcoming_approved_event)
+      event2 = create(:current_pending_event)
+      event3 = create(:current_approved_event)
+      event4 = create(:upcoming_approved_event, end_date: 1.week.from_now)
+      event5 = create(:rejected_event)
+      expect(Event.upcoming_approved).to eq([event1, event4])
+    end
+
   end
 
 end
