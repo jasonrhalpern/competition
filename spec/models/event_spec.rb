@@ -77,6 +77,11 @@ describe Event do
       expect(Event.upcoming).to eq([event2, event3])
     end
 
+    it 'returns an array of current events' do
+      event1, event2 = create(:current_approved_event), create(:upcoming_approved_event)
+      expect(Event.current).to eq([event1])
+    end
+
     it 'returns an array of current and approved events' do
       event1 = create(:current_approved_event)
       event2 = create(:current_pending_event)
@@ -87,10 +92,9 @@ describe Event do
 
     it 'returns an array of upcoming and approved events' do
       event1 = create(:upcoming_approved_event)
-      event2 = create(:current_pending_event)
+      event2 = create(:upcoming_rejected_event)
       event3 = create(:current_approved_event)
       event4 = create(:upcoming_approved_event, end_date: 1.week.from_now)
-      event5 = create(:rejected_event)
       expect(Event.upcoming_approved).to eq([event1, event4])
     end
 
