@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :event do
-    title 'Big Event'
+    sequence(:title) { |n| "event#{n}" }
     description 'This event is going to be huge'
     start_date "2014-03-09"
     end_date "2014-03-10"

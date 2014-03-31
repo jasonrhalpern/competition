@@ -13,10 +13,10 @@ class Entry < ActiveRecord::Base
   validates :title, length: { maximum: 60 }, uniqueness: true
   validates :description, length: { maximum: 300 }
 
-  scope :approved, -> { where status: :approved }
-  scope :pending, -> { where status: :pending }
-  scope :winners, -> { where award: :winner }
-  scope :runner_ups, -> { where award: :runner_up }
-  scope :finalists, -> { where award: :finalist }
+  scope :approved, -> { where status: Entry.statuses[:approved] }
+  scope :pending, -> { where status: Entry.statuses[:pending] }
+  scope :winners, -> { where award: Entry.awards[:winner] }
+  scope :runner_ups, -> { where award: Entry.awards[:runner_ups] }
+  scope :finalists, -> { where award: Entry.awards[:finalists]}
 
 end

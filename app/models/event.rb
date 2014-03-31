@@ -14,8 +14,8 @@ class Event < ActiveRecord::Base
 
   scope :current, -> { where('start_date <= ? AND ? <= end_date', current_date, current_date) }
   scope :upcoming, -> { where('? < start_date', current_date) }
-  scope :approved, -> { where status: :approved }
-  scope :pending, -> { where status: :pending }
+  scope :approved, -> { where status: Event.statuses[:approved] }
+  scope :pending, -> { where status: Event.statuses[:pending] }
 
   def self.current_approved
     Event.current.approved.order(start_date: :desc)
@@ -27,6 +27,10 @@ class Event < ActiveRecord::Base
 
   def self.recent_winners
     joins(:entries).merge(Entry.winners).order(end_date: :desc)
+  end
+
+  def self.current_date
+    Date.current
   end
 
   def closed?
@@ -46,7 +50,6 @@ class Event < ActiveRecord::Base
   end
 
   def dates_in_order
-
     if start_date.present? and end_date.present? and end_date <= start_date
       errors.add :start_date, 'The start date has to be before the end date'
     end

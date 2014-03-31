@@ -7,39 +7,39 @@ describe User do
   end
 
   it 'is invalid without an email' do
-    expect(build(:user, email: nil)).to_not be_valid
+    expect(build(:user, email: nil)).to have(2).errors_on(:email)
   end
 
   it 'is invalid without a valid email address' do
-    expect(build(:user, email: 'test.com')).to_not be_valid
+    expect(build(:user, email: 'test.com')).to have(1).errors_on(:email)
   end
 
   it 'is invalid without a username' do
-    expect(build(:user, username: nil)).to_not be_valid
+    expect(build(:user, username: nil)).to have(2).errors_on(:username)
   end
 
   it 'is invalid with a username that is too short' do
-    expect(build(:user, username: 'me')).to_not be_valid
+    expect(build(:user, username: 'me')).to have(1).errors_on(:username)
   end
 
   it 'is invalid with a username that is too long' do
-    expect(build(:user, username: 'meeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')).to_not be_valid
+    expect(build(:user, username: 'meeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee')).to have(1).errors_on(:username)
   end
 
   it 'is invalid without a role' do
-    expect(build(:user, role: nil)).to_not be_valid
+    expect(build(:user, role: nil)).to have(1).errors_on(:role)
   end
 
   it 'is invalid with a password that is too short' do
-    expect(build(:user, password: 'pw4$')).to_not be_valid
+    expect(build(:user, password: 'pw4$')).to have(1).errors_on(:password)
   end
 
   it 'is invalid with a password that is too long' do
-    expect(build(:user, password: 'passwordddddddddddddd44$')).to_not be_valid
+    expect(build(:user, password: 'passwordddddddddddddd44$')).to have(1).errors_on(:password)
   end
 
   it 'is invalid with a password that doesn\'t have the right complexity' do
-    expect(build(:user, password: 'password')).to_not be_valid
+    expect(build(:user, password: 'password')).to have(1).errors_on(:password)
   end
 
   it 'is invalid without a unique email' do

@@ -7,11 +7,11 @@ describe Vote do
   end
 
   it 'is invalid without a user' do
-    expect(build(:vote, user: nil)).to_not be_valid
+    expect(build(:vote, user: nil)).to have(1).errors_on(:user)
   end
 
   it 'is invalid without an entry' do
-    expect(build(:vote, entry: nil)).to_not be_valid
+    expect(build(:vote, entry: nil)).to have(1).errors_on(:entry)
   end
 
 end
