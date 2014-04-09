@@ -12,6 +12,7 @@ class Entry < ActiveRecord::Base
   validates :user, :event, :title, :description, :content_type, :award, :status, presence: true
   validates :title, length: { maximum: 60 }, uniqueness: true
   validates :description, length: { maximum: 300 }
+  #validate uniqueness of user id for the competition
 
   scope :approved, -> { where status: Entry.statuses[:approved] }
   scope :pending, -> { where status: Entry.statuses[:pending] }

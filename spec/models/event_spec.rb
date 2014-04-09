@@ -50,18 +50,23 @@ describe Event do
     expect(build(:event, description: '0' * 601)).to have(1).errors_on(:description)
   end
 
-  it 'is invalid if the end date is less than or equal to the start date' do
-    expect(build(:event, start_date: Date.today, end_date: Date.today)).to have(1).errors_on(:start_date)
+  it 'is invalid if the end date comes before the start date' do
     expect(build(:event, start_date: Date.today, end_date: Date.yesterday)).to have(1).errors_on(:start_date)
   end
 
-  it 'is invalid if the close date is less than or equal to the end date' do
-    expect(build(:event, end_date: Date.today, close_date: Date.today)).to have(1).errors_on(:end_date)
+  it 'is invalid if the end date is the same as the start date' do
+    expect(build(:event, start_date: Date.today, end_date: Date.today)).to have(1).errors_on(:start_date)
+  end
+
+  it 'is invalid if the close date comes before the end date' do
     expect(build(:event, end_date: Date.today, close_date: Date.yesterday)).to have(1).errors_on(:end_date)
   end
 
-  describe 'scopes' do
+  it 'is invalid if the close date is the same as the end date' do
+    expect(build(:event, end_date: Date.today, close_date: Date.today)).to have(1).errors_on(:end_date)
+  end
 
+  describe 'scope' do
     it 'returns an array of approved events' do
       event1, event2, event3 = create(:event), create(:event), create(:pending_event)
       expect(Event.approved).to eq([event1, event2])
@@ -73,28 +78,28 @@ describe Event do
     end
 
     it 'returns an array of upcoming events' do
-      event1, event2, event3 = create(:event), create(:upcoming_approved_event), create(:upcoming_approved_event)
+      event1, event2, event3 = create(:event), create(:upcoming_event), create(:upcoming_event)
       expect(Event.upcoming).to eq([event2, event3])
     end
 
     it 'returns an array of current events' do
-      event1, event2 = create(:current_approved_event), create(:upcoming_approved_event)
+      event1, event2 = create(:current_event), create(:upcoming_event)
       expect(Event.current).to eq([event1])
     end
 
-    it 'returns an array of current and approved events' do
-      event1 = create(:current_approved_event)
+    it 'returns an array of current approved events' do
+      event1 = create(:current_event)
       event2 = create(:current_pending_event)
-      event3 = create(:upcoming_approved_event)
-      event4 = create(:current_approved_event, start_date: 1.week.ago)
+      event3 = create(:upcoming_event)
+      event4 = create(:current_event, start_date: 1.week.ago)
       expect(Event.current_approved).to eq([event1, event4])
     end
 
-    it 'returns an array of upcoming and approved events' do
-      event1 = create(:upcoming_approved_event)
+    it 'returns an array of upcoming approved events' do
+      event1 = create(:upcoming_event)
       event2 = create(:upcoming_rejected_event)
-      event3 = create(:current_approved_event)
-      event4 = create(:upcoming_approved_event, end_date: 1.week.from_now)
+      event3 = create(:current_event)
+      event4 = create(:upcoming_event, end_date: 1.week.from_now)
       expect(Event.upcoming_approved).to eq([event1, event4])
     end
 

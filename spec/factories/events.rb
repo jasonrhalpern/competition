@@ -13,11 +13,11 @@ FactoryGirl.define do
     category :music
   end
 
-  factory :upcoming_approved_event,  parent: :event do
+  factory :upcoming_event,  parent: :event do
     upcoming_dates
   end
 
-  factory :current_approved_event,  parent: :event do
+  factory :current_event,  parent: :event do
     current_dates
   end
 
@@ -25,12 +25,12 @@ FactoryGirl.define do
     pending_status
   end
 
-  factory :current_pending_event,  parent: :pending_event do
-    current_dates
-  end
-
   factory :rejected_event,  parent: :event do
     rejected_status
+  end
+
+  factory :current_pending_event,  parent: :pending_event do
+    current_dates
   end
 
   factory :upcoming_rejected_event,  parent: :rejected_event do
