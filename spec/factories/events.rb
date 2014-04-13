@@ -37,6 +37,16 @@ FactoryGirl.define do
     upcoming_dates
   end
 
+  factory :event_with_entries, parent: :event do
+    ignore do
+      entries_count 3
+    end
+
+    after(:create) do |event, evaluator|
+      create_list(:entry, evaluator.entries_count, event: event)
+    end
+  end
+
   trait :current_dates do
     start_date 3.days.ago
     end_date 1.day.from_now

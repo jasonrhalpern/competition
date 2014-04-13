@@ -36,6 +36,26 @@ FactoryGirl.define do
     loser_award
   end
 
+  factory :entry_with_comments, parent: :entry do
+    ignore do
+      comments_count 4
+    end
+
+    after(:create) do |entry, evaluator|
+      create_list(:comment, evaluator.comments_count, entry: entry)
+    end
+  end
+
+  factory :entry_with_votes, parent: :entry do
+    ignore do
+      votes_count 2
+    end
+
+    after(:create) do |entry, evaluator|
+      create_list(:vote, evaluator.votes_count, entry: entry)
+    end
+  end
+
 
   trait :winner_award do
     award :winner

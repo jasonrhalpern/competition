@@ -72,6 +72,10 @@ describe Event do
     expect { event.entries.create(entry) }.to change { Event.last.entries_count }.by(1)
   end
 
+  it 'has 3 entries' do
+    expect(create(:event_with_entries).entries.count).to eq(3)
+  end
+
   it 'returns an array of approved events' do
     event1, event2, event3 = create(:event), create(:event), create(:pending_event)
     expect(Event.approved).to eq([event1, event2])

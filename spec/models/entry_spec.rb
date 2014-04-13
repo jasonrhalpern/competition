@@ -83,4 +83,12 @@ describe Entry do
     expect(Entry.finalists).to eq([entry1])
   end
 
+  it 'has 4 comments' do
+    expect(create(:entry_with_comments).comments.count).to eq(4)
+  end
+
+  it 'has 2 votes' do
+    expect(create(:entry_with_votes).votes.count).to eq(2)
+  end
+
 end
