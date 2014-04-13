@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :entry do
-    title 'This video rocks'
+    sequence(:title) { |n| "This entry rocks#{n}" }
     description 'My video is the best'
     content_type 'mp4'
     user

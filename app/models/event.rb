@@ -1,4 +1,5 @@
 class Event < ActiveRecord::Base
+  include Dates
 
   #do NOT change the order of the category enum
   enum category: [ :music, :fashion, :food, :dance, :comedy, :filmmaking, :acting, :writing ]
@@ -29,24 +30,20 @@ class Event < ActiveRecord::Base
     joins(:entries).merge(Entry.winners).order(end_date: :desc)
   end
 
-  def self.current_date
-    Date.current
-  end
-
   def closed?
-    current_date > close_date
+    self.class.current_date > close_date
   end
 
   def ended?
-    current_date > end_date
+    self.class.current_date > end_date
   end
 
   def current?
-    start_date <= current_date and current_date <= end_date
+    start_date <= self.class.current_date and self.class.current_date <= end_date
   end
 
   def upcoming?
-    current_date < start_date
+    self.class.current_date < start_date
   end
 
   def dates_in_order

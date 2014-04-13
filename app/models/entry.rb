@@ -12,12 +12,12 @@ class Entry < ActiveRecord::Base
   validates :user, :event, :title, :description, :content_type, :award, :status, presence: true
   validates :title, length: { maximum: 60 }, uniqueness: true
   validates :description, length: { maximum: 300 }
-  #validate uniqueness of user id for the competition
+  validates :user_id, uniqueness: { scope: :event_id }
 
   scope :approved, -> { where status: Entry.statuses[:approved] }
   scope :pending, -> { where status: Entry.statuses[:pending] }
   scope :winners, -> { where award: Entry.awards[:winner] }
-  scope :runner_ups, -> { where award: Entry.awards[:runner_ups] }
-  scope :finalists, -> { where award: Entry.awards[:finalists]}
+  scope :runner_ups, -> { where award: Entry.awards[:runner_up] }
+  scope :finalists, -> { where award: Entry.awards[:finalist]}
 
 end
